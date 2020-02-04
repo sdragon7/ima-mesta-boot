@@ -1,5 +1,7 @@
 package com.imamesta.services.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,11 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 	@Override
 	public ProductCategory getById(Long id) {
 		return productCategoryRepo.getOne(id);
+	}
+
+	@Override
+	public List<ProductCategory> getAll() {
+		return productCategoryRepo.findAll();
 	}
 
 }
