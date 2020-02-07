@@ -25,4 +25,8 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 		return productCategoryRepo.findAll();
 	}
 
+	@Override
+	public ProductCategory save(ProductCategory productCategory) {
+		return productCategoryRepo.save(productCategory);
+	}
 }

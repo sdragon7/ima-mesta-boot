@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -29,6 +30,10 @@ public class ProductCategoryItem {
 	@ManyToOne
 	@JoinColumn(name = "category_id")
 	private ProductCategory category;
+	
+	@Lob
+	@Column(name = "image")
+	private byte[] image;
 	
 	@OneToMany(mappedBy="categoryItem", cascade = { CascadeType.PERSIST }, fetch = FetchType.EAGER)
 	private List<Product> items;
@@ -51,6 +56,14 @@ public class ProductCategoryItem {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public byte[] getImage() {
+		return image;
+	}
+
+	public void setImage(byte[] image) {
+		this.image = image;
 	}
 
 	public List<Product> getItems() {

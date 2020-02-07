@@ -9,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -23,6 +24,10 @@ public class ProductCategory {
 	
 	@Column(name = "NAME")
 	private String name;
+	
+	@Lob
+	@Column(name = "image")
+	private byte[] image;
 	
 	@OneToMany(mappedBy="category", cascade = { CascadeType.PERSIST }, fetch = FetchType.EAGER)
 	private List<ProductCategoryItem> items;
@@ -45,6 +50,14 @@ public class ProductCategory {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public byte[] getImage() {
+		return image;
+	}
+
+	public void setImage(byte[] image) {
+		this.image = image;
 	}
 
 	public List<ProductCategoryItem> getItems() {

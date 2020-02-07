@@ -9,4 +9,6 @@ public interface ProductCategoryService {
 	ProductCategory getById(Long id);
 	
 	List<ProductCategory> getAll();
+	
+	ProductCategory save(ProductCategory productCategory);
 }

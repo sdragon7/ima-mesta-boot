@@ -1,5 +1,8 @@
 package com.imamesta.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,18 +29,52 @@ public class ProductCategoryController {
 	@CrossOrigin(origins = "*", allowCredentials = "true", allowedHeaders = "*")
 	public List<ProductCategory> returnTedt() {
 		List<ProductCategory> pc = productCategoryService.getAll();
-		for(ProductCategory p : pc) {
-			System.out.println("Kategorija: " + p.getName());
-			List<ProductCategoryItem> items = productCategoryItemService.getByProductCategoryId(p.getId());
-			for(ProductCategoryItem item : items) {
+		
+		ProductCategory pcc = productCategoryService.getById(1L);
+		
+		//for(ProductCategory p : pc) {
+			//System.out.println("Kategorija: " + p.getName());
+			//List<ProductCategoryItem> items = productCategoryItemService.getByProductCategoryId(p.getId());
+			for(ProductCategoryItem item : pcc.getItems()) {
 				System.out.println("Podkategorija: " + item.getName());
 				for(Product pp : item.getItems()) {
 					System.out.println("Proizvod: " + pp.getName());
 				}
 			}
-		}
-		
-		
+		//}
 		return pc;
 	}
+	
+	@GetMapping(value = "/images")
+	public boolean gfgfgetAllRooms() throws IOException {
+		
+		/*File f = new File("C:\\Users\\Stefan\\Desktop\\kafa.jpg");
+		byte[] fileContent = Files.readAllBytes(f.toPath());*/
+		
+		List<ProductCategory> pc = productCategoryService.getAll();
+		
+		/*for(ProductCategory p : pc) {
+			p.setImage(fileContent);
+			productCategoryService.save(p);
+			
+		}
+		*/
+		/*try {
+		for(Room r : rooms) {
+			if(r.getName().equals("Cooking")) {
+				File f = new File("C:\\Users\\Stefan\\Desktop\\cap.png");
+				byte[] fileContent = Files.readAllBytes(f.toPath());
+				r.setThumbnail(fileContent);
+				roomService.saveRoom(r);
+			}
+			
+		}
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}*/
+		
+		return true;
+	}	
+	
 }
