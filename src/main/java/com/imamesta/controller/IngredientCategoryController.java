@@ -16,12 +16,13 @@ import com.imamesta.dao.IngredientCategoryRepository;
 import com.imamesta.dao.IngredientRepository;
 import com.imamesta.domain.Ingredient;
 import com.imamesta.domain.IngredientCategory;
+import com.imamesta.services.IngredientCategoryService;
 
 @RestController
 public class IngredientCategoryController {
 
 	@Autowired
-	private IngredientCategoryRepository icr;
+	private IngredientCategoryService icr;
 	
 	@Autowired
 	private IngredientRepository irepo;
@@ -49,7 +50,7 @@ public class IngredientCategoryController {
 	@GetMapping("/warehouse/{id}")
 	@CrossOrigin(origins = "*", allowCredentials = "true", allowedHeaders = "*")
 	public List<Ingredient> getAllIngredientsByCategoryId(@PathVariable ("id") Long id) {
-		Optional<IngredientCategory> optVal = icr.findById(id);
+		Optional<IngredientCategory> optVal = icr.getById(id);
 		IngredientCategory ic = optVal.get();
 		ic.getIngredients().size();
 		return ic.getIngredients();
