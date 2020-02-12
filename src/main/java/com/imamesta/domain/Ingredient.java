@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -34,6 +35,12 @@ public class Ingredient {
 	
 	@OneToMany(mappedBy = "ingredient", cascade = CascadeType.PERSIST)
 	private List<ProductIngredients> productIngredients;
+	
+	
+	@OneToMany( mappedBy="ingredient",cascade = { CascadeType.PERSIST }, fetch = FetchType.LAZY)
+	@JsonIgnore
+	private List<UpdateMessage> messages;
+	
 	
 	@JsonIgnore
 	@ManyToOne
@@ -113,5 +120,13 @@ public class Ingredient {
 
 	public void setProductIngredients(List<ProductIngredients> productIngredients) {
 		this.productIngredients = productIngredients;
+	}
+
+	public List<UpdateMessage> getMessages() {
+		return messages;
+	}
+
+	public void setMessages(List<UpdateMessage> messages) {
+		this.messages = messages;
 	}
 }
