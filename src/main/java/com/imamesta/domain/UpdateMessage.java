@@ -1,21 +1,18 @@
 package com.imamesta.domain;
 
 import java.util.Date;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "UPDATE_MESSAGE")
@@ -40,6 +37,10 @@ public class UpdateMessage {
 	
 	@Column(name = "quantity")
 	private double quantity;
+	
+	@Column(name = "TYPE")
+	@Enumerated(EnumType.STRING)
+	private UpdateType type;
 	
 	@Column
 	private Date date;
@@ -76,6 +77,14 @@ public class UpdateMessage {
 		this.quantity = quantity;
 	}
 
+	public UpdateType getType() {
+		return type;
+	}
+
+	public void setType(UpdateType type) {
+		this.type = type;
+	}
+
 	public Date getDate() {
 		return date;
 	}
@@ -83,9 +92,4 @@ public class UpdateMessage {
 	public void setDate(Date date) {
 		this.date = date;
 	}
-
-
-	
-	
-	
 }

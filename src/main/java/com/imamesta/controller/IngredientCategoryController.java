@@ -1,26 +1,31 @@
 package com.imamesta.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.imamesta.dao.IngredientCategoryRepository;
 import com.imamesta.dao.IngredientRepository;
 import com.imamesta.dao.UpdateMessageRepository;
 import com.imamesta.domain.Ingredient;
 import com.imamesta.domain.IngredientCategory;
 import com.imamesta.domain.UpdateMessage;
 import com.imamesta.dto.UpdateMessageDto;
+import com.imamesta.dto.WhStatisticsDto;
 import com.imamesta.services.IngredientCategoryService;
 
 @RestController
@@ -38,6 +43,15 @@ public class IngredientCategoryController {
 	
 	@Autowired
 	private ModelMapper modelMapper;
+	
+	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
+
+	@InitBinder
+	public void initBinder(WebDataBinder binder){
+		String dateTimeFormat = "dd/MM/yyyy HH:mm";
+		SimpleDateFormat sdf = new SimpleDateFormat(dateTimeFormat);
+		binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
+	}
 	
 	
 	private UpdateMessage convertMessageDTOToMessageEntity(UpdateMessageDto dto) {
@@ -104,12 +118,27 @@ public class IngredientCategoryController {
 	}
 	
 	@PostMapping("/warehouse/messages")
-	
 	public void saveMessages(@RequestBody List<UpdateMessageDto> msgs) {
 		for(UpdateMessageDto msg : msgs) {
 			umr.save(convertMessageDTOToMessageEntity(msg));
 		}
 	}
 	
+	@PostMapping("/warehouse/statistics")
+	public void getList(@RequestBody WhStatisticsDto whStatisticsDto) {
+		IngredientCategory ingrCategory = icr.getById(whStatisticsDto.getIngradientCategoryId()).get();
+		for(Ingredient ingredient : ingrCategory.getIngredients()) {
+			for(UpdateMessage msg : ingredient.getMessages()) {
+				if(msg.getDate().after(whStatisticsDto.getStartDate()) && 
+						msg.getDate().before(whStatisticsDto.getEndDate())) {
+					
+					//
+					
+				}
+			}
+		}
+		
+		System.out.println(ingrCategory.getName() + ": " + whStatisticsDto.getStartDate() + " *** " + whStatisticsDto.getEndDate());
+	}
 	
 }

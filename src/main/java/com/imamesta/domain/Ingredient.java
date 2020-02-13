@@ -47,15 +47,6 @@ public class Ingredient {
 	@JoinColumn(name = "ingredient_category_id")
 	private IngredientCategory ingredientCategory;
 	
-	public IngredientCategory getIngredientCategory() {
-		return ingredientCategory;
-	}
-
-	public void setIngredientCategory(IngredientCategory ingredientCategory) {
-		this.ingredientCategory = ingredientCategory;
-	}
-
-	
 	@Column(name = "UNIT")
 	@Enumerated(EnumType.STRING)
 	private Units unit;
@@ -65,6 +56,14 @@ public class Ingredient {
 	
 	@Column(name = "LAST_QTY_UPDATE")
 	private double lastQuantityUpdate;
+	
+	public IngredientCategory getIngredientCategory() {
+		return ingredientCategory;
+	}
+
+	public void setIngredientCategory(IngredientCategory ingredientCategory) {
+		this.ingredientCategory = ingredientCategory;
+	}
 	
 	
 	public Units getUnit() {
@@ -90,9 +89,6 @@ public class Ingredient {
 	public void setLastQuantityUpdate(double lastQuantityUpdate) {
 		this.lastQuantityUpdate = lastQuantityUpdate;
 	}
-
-	
-	
 	
 	public Ingredient() {
 		
