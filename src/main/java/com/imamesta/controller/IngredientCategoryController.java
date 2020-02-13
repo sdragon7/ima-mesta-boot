@@ -24,8 +24,10 @@ import com.imamesta.dao.UpdateMessageRepository;
 import com.imamesta.domain.Ingredient;
 import com.imamesta.domain.IngredientCategory;
 import com.imamesta.domain.UpdateMessage;
+import com.imamesta.domain.UpdateType;
 import com.imamesta.dto.UpdateMessageDto;
 import com.imamesta.dto.WhStatisticsDto;
+import com.imamesta.dto.WhStatisticsList;
 import com.imamesta.services.IngredientCategoryService;
 
 @RestController
@@ -124,21 +126,29 @@ public class IngredientCategoryController {
 		}
 	}
 	
-	@PostMapping("/warehouse/statistics")
-	public void getList(@RequestBody WhStatisticsDto whStatisticsDto) {
-		IngredientCategory ingrCategory = icr.getById(whStatisticsDto.getIngradientCategoryId()).get();
+	@PostMapping("/warehouse/statistics/list")
+	public List<WhStatisticsList> getLfdfist(@RequestBody WhStatisticsDto whStatisticsDto) {
+		List<WhStatisticsList> list = new ArrayList<>();
+		double nabavka = 0, otpis = 0, potrosnja = 0;
+		IngredientCategory ingrCategory = icr.getById(whStatisticsDto.getIngredientCategoryId()).get();
 		for(Ingredient ingredient : ingrCategory.getIngredients()) {
 			for(UpdateMessage msg : ingredient.getMessages()) {
 				if(msg.getDate().after(whStatisticsDto.getStartDate()) && 
 						msg.getDate().before(whStatisticsDto.getEndDate())) {
 					
-					//
+					if(msg.getType() == UpdateType.NABAVKA) {
+						nabavka += msg.getQuantity();
+					} else if(msg.getType() == UpdateType.OTPIS) {
+						otpis += msg.getQuantity();
+					}
 					
+					potrosnja += msg.getQuantity();
 				}
 			}
+			list.add(new WhStatisticsList(ingredient.getName(), nabavka, otpis, potrosnja));
+			nabavka = 0; otpis = 0; potrosnja = 0;
 		}
 		
-		System.out.println(ingrCategory.getName() + ": " + whStatisticsDto.getStartDate() + " *** " + whStatisticsDto.getEndDate());
+		return list;
 	}
-	
 }

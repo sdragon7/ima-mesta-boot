@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class WhStatisticsDto {
 	
-	private Long ingradientCategoryId;
+	private Long ingredientCategoryId;
 	
 	private Date startDate;
 	
@@ -13,15 +13,15 @@ public class WhStatisticsDto {
 	public WhStatisticsDto() {
 		
 	}
-
-	public Long getIngradientCategoryId() {
-		return ingradientCategoryId;
+	
+	public Long getIngredientCategoryId() {
+		return ingredientCategoryId;
 	}
-
-	public void setIngradientCategoryId(Long ingradientCategoryId) {
-		this.ingradientCategoryId = ingradientCategoryId;
+	
+	public void setIngredientCategoryId(Long ingredientCategoryId) {
+		this.ingredientCategoryId = ingredientCategoryId;
 	}
-
+	
 	public Date getStartDate() {
 		return startDate;
 	}
