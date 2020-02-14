@@ -23,12 +23,15 @@ import com.imamesta.dao.IngredientRepository;
 import com.imamesta.dao.UpdateMessageRepository;
 import com.imamesta.domain.Ingredient;
 import com.imamesta.domain.IngredientCategory;
+import com.imamesta.domain.Product;
+import com.imamesta.domain.ProductIngredients;
 import com.imamesta.domain.UpdateMessage;
 import com.imamesta.domain.UpdateType;
 import com.imamesta.dto.UpdateMessageDto;
 import com.imamesta.dto.WhStatisticsDto;
 import com.imamesta.dto.WhStatisticsList;
 import com.imamesta.services.IngredientCategoryService;
+import com.imamesta.services.ProductService;
 
 @RestController
 @CrossOrigin(origins = "*", allowCredentials = "true", allowedHeaders = "*")
@@ -45,6 +48,9 @@ public class IngredientCategoryController {
 	
 	@Autowired
 	private ModelMapper modelMapper;
+	
+	@Autowired
+	private ProductService productService;
 	
 	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -125,6 +131,22 @@ public class IngredientCategoryController {
 			umr.save(convertMessageDTOToMessageEntity(msg));
 		}
 	}
+	
+	@GetMapping("/warehouse/potrosnja/{productId}")
+	public boolean ingredientPotrosnja(@PathVariable("productId") Long id) {
+		Product product = productService.getById(id);
+		for(ProductIngredients pi : product.getProductIngredients()) {
+			Ingredient ingredient = pi.getIngredient();
+			double q = ingredient.getRemainingQuantity() - 1.0;
+			ingredient.setRemainingQuantity(q);
+			ingredient.getMessages().add(new UpdateMessage(ingredient, q, UpdateType.POTROSNJA));	
+		}
+		
+		productService.saveProduct(product);
+		
+		return true;
+	}
+	
 	
 	@PostMapping("/warehouse/statistics/list")
 	public List<WhStatisticsList> getLfdfist(@RequestBody WhStatisticsDto whStatisticsDto) {

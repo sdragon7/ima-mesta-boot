@@ -45,6 +45,13 @@ public class UpdateMessage {
 	@Column
 	private Date date;
 	
+	public UpdateMessage(Ingredient ingredient, double quantity, UpdateType type) {
+		super();
+		this.ingredient = ingredient;
+		this.quantity = quantity;
+		this.type = type;
+	}
+
 	public Long getId() {
 		return id;
 	}
