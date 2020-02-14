@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class ProductIngredients implements Serializable {
 
@@ -23,6 +25,7 @@ public class ProductIngredients implements Serializable {
 	@Id
     @ManyToOne
     @JoinColumn
+    @JsonIgnore
     private Product product;
 
     @Id

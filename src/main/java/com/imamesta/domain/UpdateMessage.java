@@ -45,6 +45,10 @@ public class UpdateMessage {
 	@Column
 	private Date date;
 	
+	public UpdateMessage() {
+		
+	}
+	
 	public UpdateMessage(Ingredient ingredient, double quantity, UpdateType type) {
 		super();
 		this.ingredient = ingredient;
