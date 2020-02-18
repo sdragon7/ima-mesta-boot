@@ -105,10 +105,16 @@ public class IngredientCategoryController {
 	public Ingredient updateIngredient(@RequestBody Ingredient i) {
 		
 		Ingredient toBeUpdated = irepo.findById(i.getId()).get();
-		toBeUpdated.setRemainingQuantity(i.getRemainingQuantity() + i.getLastQuantityUpdate());
-		toBeUpdated.setLastQuantityUpdate(i.getLastQuantityUpdate());
+		double lastQtyUp = i.getLastQuantityUpdate();
+		toBeUpdated.setRemainingQuantity(toBeUpdated.getRemainingQuantity() + lastQtyUp);
+		toBeUpdated.setLastQuantityUpdate(lastQtyUp);
+		if(lastQtyUp > 0) {
+			toBeUpdated.setLastQuantityIncrease(lastQtyUp);
+		}
+		else { 
+			toBeUpdated.setLastQuantityDecrease(-lastQtyUp);
+		}
 		return irepo.save(toBeUpdated);
-		
 	}
 	
 	@PutMapping("/warehouse/ingredients")
@@ -116,14 +122,22 @@ public class IngredientCategoryController {
 		List<Ingredient> retval = new ArrayList<>();
 		for(Ingredient ingr : ilist) {
 			Ingredient toBeUpdated = irepo.findById(ingr.getId()).get();
-			toBeUpdated.setRemainingQuantity(ingr.getRemainingQuantity() + ingr.getLastQuantityUpdate());
-			toBeUpdated.setLastQuantityUpdate(ingr.getLastQuantityUpdate());
+			double lastQtyUp = ingr.getLastQuantityUpdate();
+			toBeUpdated.setRemainingQuantity(ingr.getRemainingQuantity() + lastQtyUp);
+			toBeUpdated.setLastQuantityUpdate(lastQtyUp);
+			if(lastQtyUp > 0) {
+				toBeUpdated.setLastQuantityIncrease(lastQtyUp);
+			}
+			else { 
+				toBeUpdated.setLastQuantityDecrease(-lastQtyUp);
+			}
 			retval.add(irepo.save(toBeUpdated));
 
 		}
 		//return retval;
 		return irepo.findAll();
 	}
+	
 	
 	@PostMapping("/warehouse/messages")
 	public void saveMessages(@RequestBody List<UpdateMessageDto> msgs) {

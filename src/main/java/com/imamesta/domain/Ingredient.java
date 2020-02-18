@@ -52,10 +52,50 @@ public class Ingredient {
 	private Units unit;
 	
 	@Column(name = "REM_QTY")
-	private double remainingQuantity;
+	private Double remainingQuantity;
 	
-	@Column(name = "LAST_QTY_UPDATE")
-	private double lastQuantityUpdate;
+	@Column(name = "LAST_QTY_INC", columnDefinition="default 0.0")
+	private Double lastQuantityIncrease;
+	
+	@Column(name = "LAST_QTY_DEC", columnDefinition="default 0.0")
+	private Double lastQuantityDecrease;
+	
+	@Column(name = "LAST_QTY_UPDATE", columnDefinition="default 0.0")
+	private Double lastQuantityUpdate;
+	
+	
+
+	public Double getRemainingQuantity() {
+		return remainingQuantity;
+	}
+
+	public void setRemainingQuantity(Double remainingQuantity) {
+		this.remainingQuantity = remainingQuantity;
+	}
+
+	public Double getLastQuantityIncrease() {
+		return lastQuantityIncrease;
+	}
+
+	public void setLastQuantityIncrease(Double lastQuantityIncrease) {
+		this.lastQuantityIncrease = lastQuantityIncrease;
+	}
+
+	public Double getLastQuantityDecrease() {
+		return lastQuantityDecrease;
+	}
+
+	public void setLastQuantityDecrease(Double lastQuantityDecrease) {
+		this.lastQuantityDecrease = lastQuantityDecrease;
+	}
+
+	public Double getLastQuantityUpdate() {
+		return lastQuantityUpdate;
+	}
+
+	public void setLastQuantityUpdate(Double lastQuantityUpdate) {
+		this.lastQuantityUpdate = lastQuantityUpdate;
+	}
 	
 	public IngredientCategory getIngredientCategory() {
 		return ingredientCategory;
@@ -74,21 +114,8 @@ public class Ingredient {
 		this.unit = unit;
 	}
 
-	public double getRemainingQuantity() {
-		return remainingQuantity;
-	}
+	
 
-	public void setRemainingQuantity(double remainingQuantity) {
-		this.remainingQuantity = remainingQuantity;
-	}
-
-	public double getLastQuantityUpdate() {
-		return lastQuantityUpdate;
-	}
-
-	public void setLastQuantityUpdate(double lastQuantityUpdate) {
-		this.lastQuantityUpdate = lastQuantityUpdate;
-	}
 	
 	public Ingredient() {
 		
