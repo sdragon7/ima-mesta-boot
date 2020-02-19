@@ -21,4 +21,10 @@ public class FloorServiceImpl implements FloorService {
 	public List<Floor> getFloors() {
 		return floorRepo.findAll();
 	}
+
+	@Override
+	public Floor getFloor(Long id) {
+		// TODO Auto-generated method stub
+		return floorRepo.getOne(id);
+	}
 }

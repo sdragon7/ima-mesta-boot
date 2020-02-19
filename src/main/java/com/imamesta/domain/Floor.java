@@ -23,7 +23,7 @@ public class Floor {
 	private Long id;
 	
 	@Column(name = "NAME")
-	private String name;
+	private String floorName;
 	
 	@OneToMany(mappedBy = "floor", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	private List<MyTable> tables;
@@ -40,12 +40,12 @@ public class Floor {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getFloorName() {
+		return floorName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setFloorName(String floorName) {
+		this.floorName = floorName;
 	}
 
 	public List<MyTable> getTables() {

@@ -39,9 +39,13 @@ public class MyTable {
 	
 	private Double y;
 	
-	private Boolean draggable = true;
+	private Boolean isDraggable = true;
 	
 	private Integer numberOfTabs = 2;
+	
+	private Integer activeTab;
+	
+	private String tableColor = "success";
 	
 	public MyTable() {
 		
@@ -70,4 +74,61 @@ public class MyTable {
 	public void setFloor(Floor floor) {
 		this.floor = floor;
 	}
+
+	public Double getTotal() {
+		return total;
+	}
+
+	public void setTotal(Double total) {
+		this.total = total;
+	}
+
+	public Double getX() {
+		return x;
+	}
+
+	public void setX(Double x) {
+		this.x = x;
+	}
+
+	public Double getY() {
+		return y;
+	}
+
+	public void setY(Double y) {
+		this.y = y;
+	}
+
+
+	public Boolean getIsDraggable() {
+		return isDraggable;
+	}
+
+	public void setIsDraggable(Boolean isDraggable) {
+		this.isDraggable = isDraggable;
+	}
+
+	public Integer getNumberOfTabs() {
+		return numberOfTabs;
+	}
+
+	public void setNumberOfTabs(Integer numberOfTabs) {
+		this.numberOfTabs = numberOfTabs;
+	}
+
+	public Integer getActiveTab() {
+		return activeTab;
+	}
+
+	public void setActiveTab(Integer activeTab) {
+		this.activeTab = activeTab;
+	}
+	public String getTableColor() {
+		return tableColor;
+	}
+
+	public void setTableColor(String tableColor) {
+		this.tableColor = tableColor;
+	}
+	
 }

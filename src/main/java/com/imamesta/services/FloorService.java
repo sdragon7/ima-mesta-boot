@@ -7,4 +7,6 @@ import com.imamesta.domain.Floor;
 public interface FloorService {
 	
 	public List<Floor> getFloors();
+	
+	public Floor getFloor(Long id);
 }

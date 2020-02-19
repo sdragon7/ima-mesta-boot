@@ -10,6 +10,11 @@ public class ControlledPosition {
 		
 	}
 
+	public ControlledPosition(Double x, Double y) {
+		this.x = x;
+		this.y = y;
+	}
+
 	public Double getX() {
 		return x;
 	}
