@@ -39,7 +39,7 @@ public class Product {
 	@Enumerated(EnumType.STRING)
 	private Units unit;
 	
-	@ManyToOne
+	@ManyToOne(optional = false)
 	@JoinColumn(name = "category_item_id")
 	private ProductCategoryItem categoryItem;
 	
