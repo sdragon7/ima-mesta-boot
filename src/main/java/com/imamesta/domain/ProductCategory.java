@@ -1,5 +1,6 @@
 package com.imamesta.domain;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -15,7 +16,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "PRODUCT_CATEGORY")
-public class ProductCategory {
+public class ProductCategory implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

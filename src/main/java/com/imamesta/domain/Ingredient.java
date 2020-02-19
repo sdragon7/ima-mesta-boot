@@ -54,13 +54,13 @@ public class Ingredient {
 	@Column(name = "REM_QTY")
 	private Double remainingQuantity;
 	
-	@Column(name = "LAST_QTY_INC", columnDefinition="default 0.0")
+	@Column(name = "LAST_QTY_INC", columnDefinition="double default 0.0")
 	private Double lastQuantityIncrease;
 	
-	@Column(name = "LAST_QTY_DEC", columnDefinition="default 0.0")
+	@Column(name = "LAST_QTY_DEC", columnDefinition="double default 0.0")
 	private Double lastQuantityDecrease;
 	
-	@Column(name = "LAST_QTY_UPDATE", columnDefinition="default 0.0")
+	@Column(name = "LAST_QTY_UPDATE", columnDefinition="double default 0.0")
 	private Double lastQuantityUpdate;
 	
 	

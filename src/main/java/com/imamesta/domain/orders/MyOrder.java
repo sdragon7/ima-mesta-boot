@@ -14,8 +14,8 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Table;
 
 import com.imamesta.domain.MyCheck;
-import com.imamesta.domain.MyTable;
 import com.imamesta.domain.Product;
+import com.imamesta.domain.table.MyTable;
 
 @MappedSuperclass
 public class MyOrder  {
