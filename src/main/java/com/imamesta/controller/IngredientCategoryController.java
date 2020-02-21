@@ -9,6 +9,7 @@ import java.util.Optional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.imamesta.dao.IngredientRepository;
@@ -27,6 +29,7 @@ import com.imamesta.domain.Product;
 import com.imamesta.domain.ProductIngredients;
 import com.imamesta.domain.UpdateMessage;
 import com.imamesta.domain.UpdateType;
+import com.imamesta.dto.IngredientDto;
 import com.imamesta.dto.UpdateMessageDto;
 import com.imamesta.dto.WhStatisticsDto;
 import com.imamesta.dto.WhStatisticsList;
@@ -83,9 +86,16 @@ public class IngredientCategoryController {
 			for(Ingredient i : l.getIngredients()) {
 			}
 		}
-		return lista;
-		
+		return lista;	
 	}
+	@PostMapping(value = "/warehouse/categories/add", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public IngredientCategory addCategory(@RequestParam String name) {
+		IngredientCategory ic = new IngredientCategory();
+		ic.setName(name);
+		return icr.save(ic);
+	}
+	
+	
 	
 	@GetMapping("/warehouse/ingredients")
 	public List<Ingredient> getIngredients() {
@@ -93,6 +103,16 @@ public class IngredientCategoryController {
 		return irepo.findAll();
 		
 	}
+	@PostMapping("/warehouse/ingredients")
+	public Ingredient addIngredient(@RequestBody IngredientDto idto) {
+		Ingredient i = new Ingredient();
+		i.setName(idto.getName());
+		i.setRemainingQuantity(idto.getRemainingQuantity());
+		i.setIngredientCategory(icr.getById(idto.getCategoryId()).get());
+		i.setUnit(idto.getUnit());
+		return irepo.save(i);
+	}
+	
 	@GetMapping("/warehouse/{id}")
 	public List<Ingredient> getAllIngredientsByCategoryId(@PathVariable ("id") Long id) {
 		Optional<IngredientCategory> optVal = icr.getById(id);

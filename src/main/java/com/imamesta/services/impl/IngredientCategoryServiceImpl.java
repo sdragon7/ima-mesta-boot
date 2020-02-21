@@ -30,5 +30,11 @@ public class IngredientCategoryServiceImpl implements IngredientCategoryService 
 		// TODO Auto-generated method stub
 		return icr.findById(id);
 	}
+	@Override
+	public IngredientCategory save(IngredientCategory ic) {
+		return icr.save(ic);
+	}
+	
+	
 
 }

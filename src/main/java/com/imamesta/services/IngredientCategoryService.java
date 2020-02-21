@@ -9,4 +9,5 @@ public interface IngredientCategoryService {
 
 	List<IngredientCategory> findAll();
 	Optional<IngredientCategory> getById(Long id);
+	IngredientCategory save(IngredientCategory ic);
 }
