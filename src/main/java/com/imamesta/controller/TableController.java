@@ -14,13 +14,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.imamesta.domain.MyCheck;
 import com.imamesta.domain.orders.ActiveOrder;
-import com.imamesta.domain.orders.MyOrder;
 import com.imamesta.domain.orders.PaidOrder;
 import com.imamesta.domain.table.ControlledPosition;
 import com.imamesta.domain.table.MyTable;
 import com.imamesta.domain.table.TabNumber;
 import com.imamesta.dto.MyTableDto;
 import com.imamesta.services.ActiveOrderService;
+import com.imamesta.services.MyCheckService;
+import com.imamesta.services.ProductService;
 import com.imamesta.services.TableService;
 
 @RestController
@@ -31,6 +32,12 @@ public class TableController {
 	
 	@Autowired
 	private ActiveOrderService activeOrderService;
+	
+	@Autowired
+	private MyCheckService myCheckService;
+	
+	@Autowired
+	ProductService ps;
 	
 	@Autowired
 	private ModelMapper modelMapper;
@@ -121,11 +128,23 @@ public class TableController {
 		
 		MyCheck check = new MyCheck();
 		check.setMyOrders(new ArrayList<>());
+		check.setTotal(0.0);
 		for(ActiveOrder aOrder : tableDto.getOrders()) {
+			PaidOrder pOrder = new PaidOrder();
+			pOrder.setMyTable(table);
+			pOrder.setProduct(aOrder.getProduct());
+			pOrder.setQuantity(aOrder.getQuantity());
+			pOrder.setMyCheck(check);
 			
-			check.getMyOrders().add(new PaidOrder());
+			check.setTotal(check.getTotal() + aOrder.getProduct().getPrice());
+			check.getMyOrders().add(pOrder);
+			
+			
+			myCheckService.saveMyCheck(check, aOrder);
 			
 		}
+		
+		table.setTotal(table.getTotal() - check.getTotal());
 		
 		return convertTableToDto(tableService.updateTable(table));
 	}

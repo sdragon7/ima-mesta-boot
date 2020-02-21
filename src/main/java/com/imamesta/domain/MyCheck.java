@@ -29,7 +29,7 @@ public class MyCheck {
 	@Id
 	private Long id;
 	
-	@OneToMany(mappedBy = "myCheck", cascade = CascadeType.PERSIST)
+	@OneToMany(mappedBy = "myCheck", cascade = CascadeType.ALL)
 	private List<PaidOrder> myOrders;
 	
 
