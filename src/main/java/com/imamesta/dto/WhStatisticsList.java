@@ -1,6 +1,8 @@
 package com.imamesta.dto;
 
-public class WhStatisticsList {
+import java.io.Serializable;
+
+public class WhStatisticsList implements Serializable {
 	
 	private String ingredientName;
 	

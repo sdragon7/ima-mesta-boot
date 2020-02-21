@@ -1,14 +1,22 @@
 package com.imamesta.dto;
 
+import java.io.Serializable;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.imamesta.domain.orders.ActiveOrder;
 import com.imamesta.domain.table.ControlledPosition;
 import com.imamesta.domain.table.TabNumber;
 
-public class MyTableDto {
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class MyTableDto implements Serializable {
 
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private List<ActiveOrder> orders;
 	
 	private Double total;

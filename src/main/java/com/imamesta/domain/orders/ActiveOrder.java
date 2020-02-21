@@ -1,13 +1,23 @@
 package com.imamesta.domain.orders;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 
 @Entity
 @Table(name = "ACTIVE_ORDER")
-public class ActiveOrder extends MyOrder {
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class ActiveOrder extends MyOrder implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Column(name = "CHECKED")
 	private Boolean checked;

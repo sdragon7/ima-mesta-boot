@@ -31,6 +31,7 @@ public class ProductIngredients implements Serializable {
     @Id
     @ManyToOne
     @JoinColumn
+    @JsonIgnore
     private Ingredient ingredient;
     
     @Column(name = "QUANTITY", columnDefinition = "double default 0")

@@ -1,8 +1,9 @@
 package com.imamesta.dto;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class WhStatisticsDto {
+public class WhStatisticsDto implements Serializable {
 	
 	private Long ingredientCategoryId;
 	

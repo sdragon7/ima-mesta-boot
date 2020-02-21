@@ -1,10 +1,11 @@
 package com.imamesta.dto;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import com.imamesta.domain.UpdateType;
 
-public class UpdateMessageDto {
+public class UpdateMessageDto implements Serializable {
 
 	private String msg;
 	private double quantity;

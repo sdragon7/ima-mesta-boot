@@ -1,8 +1,9 @@
 package com.imamesta.dto;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class FloorDto {
+public class FloorDto implements Serializable{
 
 	private Long id;
 

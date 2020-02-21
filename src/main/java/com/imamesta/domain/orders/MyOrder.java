@@ -1,24 +1,28 @@
 package com.imamesta.domain.orders;
 
-import javax.persistence.CascadeType;
+import java.io.Serializable;
+
 import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.Table;
 
-import com.imamesta.domain.MyCheck;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.imamesta.domain.Product;
 import com.imamesta.domain.table.MyTable;
 
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @MappedSuperclass
-public class MyOrder  {
+public class MyOrder implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -31,14 +35,28 @@ public class MyOrder  {
 
 	
 	
+	@JsonIgnore
 	@ManyToOne
 	private MyTable myTable;
 	
-	@ManyToOne(cascade = CascadeType.PERSIST, optional = false)
+	@ManyToOne
 	@JoinColumn(name = "product_id")
 	private Product product;
 
 	
+	public MyOrder() {
+		super();
+	}
+
+
+	public MyOrder(Double quantity, MyTable myTable, Product product) {
+		super();
+		this.quantity = quantity;
+		this.myTable = myTable;
+		this.product = product;
+	}
+
+
 	public MyTable getMyTable() {
 		return myTable;
 	}

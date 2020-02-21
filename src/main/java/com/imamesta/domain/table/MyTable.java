@@ -1,5 +1,6 @@
 package com.imamesta.domain.table;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -13,18 +14,25 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.imamesta.domain.Floor;
 import com.imamesta.domain.orders.ActiveOrder;
 
 @Entity
 @Table(name = "MY_TABLE")
-public class MyTable {
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class MyTable implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	@OneToMany(mappedBy = "myTable", cascade = CascadeType.PERSIST)
+	@OneToMany(mappedBy = "myTable", cascade = { CascadeType.ALL })
 	private List<ActiveOrder> orders;
 	
 	@ManyToOne
