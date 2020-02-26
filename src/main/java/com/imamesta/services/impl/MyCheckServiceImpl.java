@@ -33,6 +33,10 @@ public class MyCheckServiceImpl implements MyCheckService {
 	public MyTable createCheck(Long tableId, List<ActiveOrder> orders) {
 		MyTable table = tableService.getById(tableId);
 		
+		if(orders.size() == 0) {
+			return table;
+		}
+		
 		MyCheck check = new MyCheck();
 		check.setMyOrders(new ArrayList<>());
 		check.setTotal(0.0);
@@ -43,12 +47,11 @@ public class MyCheckServiceImpl implements MyCheckService {
 			pOrder.setProduct(order.getProduct());
 			pOrder.setQuantity(order.getQuantity());
 			pOrder.setMyCheck(check);
-			check.setTotal(check.getTotal() + order.getProduct().getPrice());
+			check.setTotal(check.getTotal() + (order.getProduct().getPrice() * order.getQuantity()));
 			check.getMyOrders().add(pOrder);
+			table.setTotal(table.getTotal() - (order.getProduct().getPrice() * order.getQuantity()));
 			activeOrderService.removeOrder(order);
 		}
-		
-		table.setTotal(table.getTotal() - check.getTotal());
 		
 		myCheckRepository.save(check);
 		return tableService.updateTable(table);
