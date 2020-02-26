@@ -24,7 +24,11 @@ public class FloorServiceImpl implements FloorService {
 
 	@Override
 	public Floor getFloor(Long id) {
-		// TODO Auto-generated method stub
 		return floorRepo.getOne(id);
+	}
+
+	@Override
+	public Floor getByName(String floorName) {
+		return floorRepo.getByFloorName(floorName);
 	}
 }

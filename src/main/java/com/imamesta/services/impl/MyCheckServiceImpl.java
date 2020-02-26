@@ -50,6 +50,7 @@ public class MyCheckServiceImpl implements MyCheckService {
 			check.setTotal(check.getTotal() + (order.getProduct().getPrice() * order.getQuantity()));
 			check.getMyOrders().add(pOrder);
 			table.setTotal(table.getTotal() - (order.getProduct().getPrice() * order.getQuantity()));
+			table.setTableColor("success");
 			activeOrderService.removeOrder(order);
 		}
 		

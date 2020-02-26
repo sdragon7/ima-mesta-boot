@@ -40,18 +40,17 @@ public class MyTable implements Serializable {
 	@JsonIgnore
 	private Floor floor;
 	
-	
 	private Double total = 0.0;
 	
-	private Double x;
+	private Double x = 25.0;
 	
-	private Double y;
+	private Double y = 25.0;
 	
 	private Boolean isDraggable = true;
 	
 	private Integer numberOfTabs = 2;
 	
-	private Integer activeTab;
+	private Integer activeTab = 1;
 	
 	private String tableColor = "success";
 	

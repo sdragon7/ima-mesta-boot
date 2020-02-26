@@ -10,20 +10,21 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.imamesta.domain.MyCheck;
 import com.imamesta.domain.orders.ActiveOrder;
-import com.imamesta.domain.orders.PaidOrder;
 import com.imamesta.domain.table.ControlledPosition;
 import com.imamesta.domain.table.MyTable;
 import com.imamesta.domain.table.TabNumber;
 import com.imamesta.dto.MyTableDto;
 import com.imamesta.services.ActiveOrderService;
+import com.imamesta.services.FloorService;
 import com.imamesta.services.MyCheckService;
 import com.imamesta.services.TableService;
 
 @RestController
+@CrossOrigin(origins = "*", allowCredentials = "true", allowedHeaders = "*")
 public class TableController {
 	
 	@Autowired
@@ -36,10 +37,29 @@ public class TableController {
 	private MyCheckService myCheckService;
 	
 	@Autowired
+	private FloorService floorService;
+	
+	@Autowired
 	private ModelMapper modelMapper;
 	
+	@PostMapping("/table/add/new")
+	public MyTableDto addTable(@RequestParam String floorName) {
+		MyTable table = new MyTable();
+		table.setFloor(floorService.getByName(floorName));
+		table.setOrders(new ArrayList<>());
+		MyTable tableNew = tableService.updateTable(table);
+		return convertTableToDto(tableNew);
+	}
+	
+	@PutMapping("/table/update/position")
+	public MyTableDto updateTablePosition(@RequestBody MyTableDto tableDto) {
+		MyTable table = tableService.getById(tableDto.getTableNumber());
+		table.setX(tableDto.getControlledPosition().getX());
+		table.setY(tableDto.getControlledPosition().getY());
+		return convertTableToDto(tableService.updateTable(table));
+	}
+	
 	@PutMapping("/table/add/order")
-	@CrossOrigin(origins = "*", allowCredentials = "true", allowedHeaders = "*")
 	public MyTableDto addOrder(@RequestBody MyTableDto tableDto) {
 		MyTable table = tableService.getById(tableDto.getTableNumber());
 		
@@ -70,12 +90,12 @@ public class TableController {
 		order.setMyTable(table);
 		table.setActiveTab(order.getMyTab());
 		table.setTotal(table.getTotal() + order.getProduct().getPrice());
+		table.setTableColor("danger");
 		
 		return convertTableToDto(tableService.updateTable(table));
 	}
 	
 	@PutMapping("/table/add/tab")
-	@CrossOrigin(origins = "*", allowCredentials = "true", allowedHeaders = "*")
 	public MyTableDto addTab(@RequestBody MyTableDto tableDto) {
 		MyTable table = tableService.getById(tableDto.getTableNumber());
 		table.setNumberOfTabs(table.getNumberOfTabs() + 1);
@@ -84,7 +104,6 @@ public class TableController {
 	}
 	
 	@PutMapping("/table/{type}/order")
-	@CrossOrigin(origins = "*", allowCredentials = "true", allowedHeaders = "*")
 	public MyTableDto increaseOrder(@PathVariable("type") String type, @RequestBody MyTableDto tableDto) {
 		MyTable table = tableService.getById(tableDto.getTableNumber());
 		
@@ -97,12 +116,16 @@ public class TableController {
 				if(type.equals("increase")) {
 					tOrder.setQuantity(tOrder.getQuantity() + 1);
 					table.setTotal(table.getTotal() + order.getProduct().getPrice());
+					table.setTableColor("danger");
 				}
 				else {
 					tOrder.setQuantity(tOrder.getQuantity() - 1);
 					table.setTotal(table.getTotal() - order.getProduct().getPrice());
 					
 					if(tOrder.getQuantity() == 0) {
+						if(table.getOrders().size() == 1)
+							table.setTableColor("success");
+						
 						table.getOrders().remove(tOrder);
 						activeOrderService.removeOrder(tOrder);
 					}
@@ -118,7 +141,6 @@ public class TableController {
 	}
 	
 	@PostMapping("/table/orders/pay")
-	@CrossOrigin(origins = "*", allowCredentials = "true", allowedHeaders = "*")
 	public MyTableDto payOrders(@RequestBody MyTableDto tableDto) {
 		return convertTableToDto(myCheckService.createCheck(tableDto.getTableNumber(), tableDto.getOrders()));
 	}
