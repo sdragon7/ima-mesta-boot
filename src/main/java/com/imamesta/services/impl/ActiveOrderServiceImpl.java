@@ -2,6 +2,7 @@ package com.imamesta.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.imamesta.dao.ActiveOrderRepository;
@@ -16,8 +17,8 @@ public class ActiveOrderServiceImpl implements ActiveOrderService {
 	private ActiveOrderRepository orderRepo;
 	
 	@Override
-	public void removeOrder(ActiveOrder order) {
+	//@Transactional(propagation = Propagation.MANDATORY)
+	public void removeOrder(ActiveOrder order) throws RuntimeException{
 		 orderRepo.delete(order);
 	}
-
 }

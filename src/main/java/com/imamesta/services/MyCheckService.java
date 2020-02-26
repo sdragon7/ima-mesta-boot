@@ -1,9 +1,11 @@
 package com.imamesta.services;
 
-import com.imamesta.domain.MyCheck;
+import java.util.List;
+
 import com.imamesta.domain.orders.ActiveOrder;
+import com.imamesta.domain.table.MyTable;
 
 public interface MyCheckService {
 
-	MyCheck saveMyCheck(MyCheck myCheck, ActiveOrder order);
+	MyTable createCheck(Long tableId, List<ActiveOrder> order);
 }

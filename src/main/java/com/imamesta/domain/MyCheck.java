@@ -29,7 +29,7 @@ public class MyCheck {
 	@Id
 	private Long id;
 	
-	@OneToMany(mappedBy = "myCheck", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "myCheck", cascade = CascadeType.ALL) //radi i persist i merge
 	private List<PaidOrder> myOrders;
 	
 

@@ -21,7 +21,6 @@ import com.imamesta.domain.table.TabNumber;
 import com.imamesta.dto.MyTableDto;
 import com.imamesta.services.ActiveOrderService;
 import com.imamesta.services.MyCheckService;
-import com.imamesta.services.ProductService;
 import com.imamesta.services.TableService;
 
 @RestController
@@ -35,9 +34,6 @@ public class TableController {
 	
 	@Autowired
 	private MyCheckService myCheckService;
-	
-	@Autowired
-	ProductService ps;
 	
 	@Autowired
 	private ModelMapper modelMapper;
@@ -124,29 +120,7 @@ public class TableController {
 	@PostMapping("/table/orders/pay")
 	@CrossOrigin(origins = "*", allowCredentials = "true", allowedHeaders = "*")
 	public MyTableDto payOrders(@RequestBody MyTableDto tableDto) {
-		MyTable table = tableService.getById(tableDto.getTableNumber());
-		
-		MyCheck check = new MyCheck();
-		check.setMyOrders(new ArrayList<>());
-		check.setTotal(0.0);
-		for(ActiveOrder aOrder : tableDto.getOrders()) {
-			PaidOrder pOrder = new PaidOrder();
-			pOrder.setMyTable(table);
-			pOrder.setProduct(aOrder.getProduct());
-			pOrder.setQuantity(aOrder.getQuantity());
-			pOrder.setMyCheck(check);
-			
-			check.setTotal(check.getTotal() + aOrder.getProduct().getPrice());
-			check.getMyOrders().add(pOrder);
-			
-			
-			myCheckService.saveMyCheck(check, aOrder);
-			
-		}
-		
-		table.setTotal(table.getTotal() - check.getTotal());
-		
-		return convertTableToDto(tableService.updateTable(table));
+		return convertTableToDto(myCheckService.createCheck(tableDto.getTableNumber(), tableDto.getOrders()));
 	}
 	
 	private MyTableDto  convertTableToDto(MyTable myTable) {
