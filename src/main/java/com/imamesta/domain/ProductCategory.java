@@ -18,6 +18,11 @@ import javax.persistence.Table;
 @Table(name = "PRODUCT_CATEGORY")
 public class ProductCategory implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID")
@@ -30,7 +35,7 @@ public class ProductCategory implements Serializable {
 	@Column(name = "image")
 	private byte[] image;
 	
-	@OneToMany(mappedBy="category", cascade = { CascadeType.PERSIST }, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy="category", cascade = { CascadeType.PERSIST })
 	private List<ProductCategoryItem> items;
 	
 	public ProductCategory() {

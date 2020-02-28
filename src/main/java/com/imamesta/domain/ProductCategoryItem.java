@@ -1,11 +1,11 @@
 package com.imamesta.domain;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,7 +17,12 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "PRODUCT_CATEGORY_ITEM")
-public class ProductCategoryItem {
+public class ProductCategoryItem implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -35,7 +40,7 @@ public class ProductCategoryItem {
 	@Column(name = "image")
 	private byte[] image;
 	
-	@OneToMany(mappedBy="categoryItem", cascade = { CascadeType.PERSIST }, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy="categoryItem", cascade = { CascadeType.PERSIST })
 	private List<Product> items;
 	
 	public ProductCategoryItem() {

@@ -6,21 +6,34 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.imamesta.domain.Product;
 import com.imamesta.domain.ProductCategory;
+import com.imamesta.domain.ProductCategoryItem;
+import com.imamesta.domain.ProductIngredients;
+import com.imamesta.services.ProductCategoryItemService;
 import com.imamesta.services.ProductCategoryService;
 
 @RestController
+@CrossOrigin(origins = "*", allowCredentials = "true", allowedHeaders = "*")
 public class ProductCategoryController {
 
 	@Autowired
 	private ProductCategoryService productCategoryService;
 	
-	@GetMapping("/test")
-	@CrossOrigin(origins = "*", allowCredentials = "true", allowedHeaders = "*")
+	@Autowired
+	private ProductCategoryItemService productCategoryItemService;
+	
+	@GetMapping("/category/list")
 	public List<ProductCategory> getProductCategories() {
 		return productCategoryService.getAll();
+	}
+	
+	@GetMapping("/category/{id}/items")
+	public List<ProductCategoryItem> getProductCategoryItems(@PathVariable("id") Long id) {
+		return productCategoryItemService.getByProductCategoryId(id);
 	}
 	
 	@GetMapping(value = "/images")

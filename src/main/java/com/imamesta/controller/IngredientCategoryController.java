@@ -204,7 +204,6 @@ public class IngredientCategoryController {
 			list.add(new WhStatisticsList(ingredient.getName(), nabavka, otpis, potrosnja));
 			nabavka = 0; otpis = 0; potrosnja = 0;
 		}
-		
 		return list;
 	}
 }
